@@ -4,6 +4,9 @@ const foodSound = new Audio('audio file name');
 const gameOverSound = new Audio('audio file name');
 const moveSound = new Audio('audio file name');
 const musicSound = new Audio('audio file name');
+const hiscoreBox = document.getElementById('hiscoreBox');
+const scoreBox = document.getElementById('scoreBox');
+let hiscoreval;
 let speed = 5;
 let score = 0;
 let lastPaintTime = 0;
@@ -52,11 +55,11 @@ function gameEngine(){
     if(snakeArr[0].y === food.y && snakeArr[0].x === food.x){
         foodSound.play();
         score += 1;
-        // if(score>hiscoreval){
-        //     hiscoreval = score;
-        //     localStorage.setItem("hiscore", JSON.stringify(hiscoreval))
-        //     hiscoreBox.innerHTML = "HiScore: "+ hiscoreval;
-        // }
+        if(score>hiscoreval){
+            hiscoreval = score;
+            localStorage.setItem("hiscore", JSON.stringify(hiscoreval))
+            hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
+        }
         scoreBox.innerHTML = "Score: "+ score;
         snakeArr.unshift({x: snakeArr[0].x + inputDir.x , y:snakeArr[0].y + inputDir.y});
         let a=2;
@@ -92,16 +95,16 @@ function gameEngine(){
         board.appendChild(foodElement);
 }
 
-
+//localStorage.clear() aei method use korbo console ae.for clear localStorage.
 //main logic starts here
-// let hiscore = localStorage.getItem("hiscore");
-// if(hiscore === null){
-//     hiscoreval = 0;
-//     localStorage.setItem("hiscore", JSON.stringify(hiscoreval))
-// }else{
-//     hiscoreval = JSON.parse(hiscore);
-//     hiscoreBox.innerHTML = "HiScore: " + hiscore;
-// }
+let hiscore = localStorage.getItem("hiscore");
+if(hiscore === null){
+    hiscoreval = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscoreval));
+}else{
+    hiscoreval = JSON.parse(hiscore);
+    hiscoreBox.innerHTML = "HiScore: " + hiscore;
+}
 
 window.requestAnimationFrame(main);
 window.addEventListener('keydown',e=>{
